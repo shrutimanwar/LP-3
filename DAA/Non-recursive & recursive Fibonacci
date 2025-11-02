@@ -1,0 +1,32 @@
+def fibonacci_recursive(n):
+    if n <= 1:
+        return n
+    else:
+        return fibonacci_recursive(n - 1) + fibonacci_recursive(n - 2)
+
+def fibonacci_iterative(n):
+    if n <= 1:
+        return n
+    a, b = 0, 1
+    for _ in range(2, n + 1):
+        a, b = b, a + b
+    return b
+
+n = int(input("Enter the number of terms: "))
+
+print("\nFibonacci numbers using Recursive method:")
+for i in range(n):
+    print(fibonacci_recursive(i), end=" ")
+
+print("\n\nFibonacci numbers using Non-Recursive (Iterative) method:")
+for i in range(n):
+    print(fibonacci_iterative(i), end=" ")
+
+print("\n\n--- Time and Space Complexity Analysis ---")
+print("1. Recursive Fibonacci:")
+print("   ➤ Time Complexity: O(2^n)")
+print("   ➤ Space Complexity: O(n)  (due to recursion call stack)")
+
+print("\n2. Non-Recursive (Iterative) Fibonacci:")
+print("   ➤ Time Complexity: O(n)")
+print("   ➤ Space Complexity: O(1)")
