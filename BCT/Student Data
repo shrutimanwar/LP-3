@@ -1,0 +1,53 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+/*
+ * Solidity Program to store Student data using:
+ *   • Structures
+ *   • Arrays
+ *   • Fallback Function
+ */
+
+contract StudentData {
+    // Structure for Student
+    struct Student {
+        uint256 rollNo;
+        string name;
+        uint256 marks;
+    }
+
+    // Dynamic array of Student structure
+    Student[] public students;
+
+    // Event logs
+    event StudentAdded(uint256 rollNo, string name, uint256 marks);
+    event ReceivedEther(address sender, uint256 amount);
+
+    // Function to add new student
+    function addStudent(uint256 _rollNo, string memory _name, uint256 _marks) public {
+        students.push(Student(_rollNo, _name, _marks));
+        emit StudentAdded(_rollNo, _name, _marks);
+    }
+
+    // Function to get total number of students
+    function getStudentCount() public view returns (uint256) {
+        return students.length;
+    }
+
+    // Function to get student details by index
+    function getStudent(uint256 index) public view returns (uint256, string memory, uint256) {
+        require(index < students.length, "Invalid index");
+        Student memory s = students[index];
+        return (s.rollNo, s.name, s.marks);
+    }
+
+    // Fallback function to receive Ether
+    fallback() external payable {
+        emit ReceivedEther(msg.sender, msg.value);
+    }
+
+    // Receive function for direct Ether transfers
+    receive() external payable {
+        emit ReceivedEther(msg.sender, msg.value);
+    }
+}
