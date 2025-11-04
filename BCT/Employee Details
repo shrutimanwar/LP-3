@@ -1,0 +1,25 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract EmployeeDetails {
+    
+    // Step 1: Define a structure for Employee
+    struct Employee {
+        uint id;
+        string name;
+        uint salary;
+        string joiningDate;
+    }
+
+    Employee public emp;  // Declare one Employee variable
+
+    // Step 2: Function to set employee details
+    function setEmployee(uint _id, string memory _name, uint _salary, string memory _joiningDate) public {
+        emp = Employee(_id, _name, _salary, _joiningDate);
+    }
+
+    // Step 3: Function to get employee details
+    function getEmployee() public view returns (uint, string memory, uint, string memory) {
+        return (emp.id, emp.name, emp.salary, emp.joiningDate);
+    }
+}
