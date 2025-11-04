@@ -1,0 +1,36 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract PassStudentsMarks {
+    uint[10] public marks;  // Fixed-size array for 10 students
+    uint public count = 0;  // Keeps track of number of marks stored
+
+    // Function to accept marks only if > 40, until array is full
+    function addMarks(uint[] memory inputMarks) public {
+        uint i = 0;
+
+        // Use do-while loop to iterate through input marks
+        do {
+            if (count >= 10) {
+                break; // Stop if array is full
+            }
+
+            if (inputMarks[i] > 40) {
+                marks[count] = inputMarks[i];
+                count++;
+            }
+
+            i++;
+        } while (i < inputMarks.length);
+    }
+
+    // Function to get stored marks
+    function getMarks() public view returns (uint[10] memory) {
+        return marks;
+    }
+
+    // Function to get how many marks are stored
+    function getCount() public view returns (uint) {
+        return count;
+    }
+}
