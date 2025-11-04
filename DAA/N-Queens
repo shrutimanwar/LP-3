@@ -1,0 +1,68 @@
+def print_board(board):
+    """Prints the chessboard matrix"""
+    for row in board:
+        print(" ".join("Q" if cell else "." for cell in row))
+    print()
+
+
+def is_safe(board, row, col, n):
+    """Check if placing a queen at board[row][col] is safe"""
+
+    # Check this column
+    for i in range(row):
+        if board[i][col]:
+            return False
+
+    # Check upper left diagonal
+    for i, j in zip(range(row-1, -1, -1), range(col-1, -1, -1)):
+        if board[i][j]:
+            return False
+
+    # Check upper right diagonal
+    for i, j in zip(range(row-1, -1, -1), range(col+1, n)):
+        if board[i][j]:
+            return False
+
+    return True
+
+
+def solve_nqueens(board, row, n):
+    """Backtracking function to solve N-Queens"""
+    if row == n:
+        print("Final N-Queens Matrix:")
+        print_board(board)
+        return True
+
+    for col in range(n):
+        if is_safe(board, row, col, n):
+            board[row][col] = 1
+            if solve_nqueens(board, row + 1, n):
+                return True
+            board[row][col] = 0  # Backtrack
+
+    return False
+
+
+# -----------------------------
+# Main Program
+# -----------------------------
+def main():
+    n = int(input("Enter number of Queens (N): "))
+    board = [[0] * n for _ in range(n)]
+
+    # Get position for the first Queen
+    row1 = int(input("Enter row index for first Queen (0-based): "))
+    col1 = int(input("Enter column index for first Queen (0-based): "))
+
+    # Place the first queen
+    board[row1][col1] = 1
+    print("\nInitial board with first Queen placed:")
+    print_board(board)
+
+    # Start solving from the next row
+    if not solve_nqueens(board, row1 + 1, n):
+        print("No solution exists for the given first Queen position.")
+
+
+if __name__ == "__main__":
+    main()
